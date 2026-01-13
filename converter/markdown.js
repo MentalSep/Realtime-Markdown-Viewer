@@ -11,7 +11,6 @@ var parseHeadline = function (str) {
   return str;
 };
 
-
 parseHorizontaleLine = function (str) {
   var horizontalRegExp = /^(?:([\*\-_] ?)+)\1\1$/gm;
   var stra = [];
@@ -40,6 +39,7 @@ var markdown = {
     str = parseBold(str);
     str = parseHorizontaleLine(str);
     str = parseLink(str);
+    str = parseStrong(str);
     return str;
   },
 };
@@ -48,6 +48,14 @@ var parseBold = function (str) {
   var boldRegExp = /(\*\*)(.*?)\1/;
   var stra = [];
   while ((stra = boldRegExp.exec(str)) !== null) {
+    str = str.replace(stra[0], "<b>" + stra[2] + "</b>");
+  }
+  return str;
+};
+var parseStrong = function (str) {
+  var strongRegExp = /(~~)(.*?)\1/;
+  var stra = [];
+  while ((stra = strongRegExp.exec(str)) !== null) {
     str = str.replace(stra[0], "<strong>" + stra[2] + "</strong>");
   }
   return str;
